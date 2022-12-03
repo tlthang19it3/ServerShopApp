@@ -1,4 +1,4 @@
-const products = [
+const clothes = [
   {
     name: "Aos pro",
     image: "https://thoitrangbigsize.vn/wp-content/uploads/2019/09/1-6.jpg",
@@ -126,4 +126,4 @@ const products = [
     numReviews: 3,
   },
 ];
-export default products;
+export default clothes;

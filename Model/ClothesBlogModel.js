@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
-const productSchema = mongoose.Schema(
+const clothesblogSchema = mongoose.Schema(
   {
-    name: {
+    userId: {
+      type: String,
+      require: true,
+    },
+    title: {
       type: String,
       require: true,
     },
@@ -25,10 +29,12 @@ const productSchema = mongoose.Schema(
     rating: {
       type: Number,
       require: true,
+      default: 0,
     },
     numReviews: {
       type: Number,
       require: true,
+      default: 0,
     },
   },
   {
@@ -36,5 +42,5 @@ const productSchema = mongoose.Schema(
   }
 );
 
-const Product = mongoose.model("Product", productSchema);
-export default Product;
+const ClotheBlog = mongoose.model("ClotheBlog", clothesblogSchema);
+export default ClotheBlog;

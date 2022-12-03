@@ -3,13 +3,21 @@ import dotenv from "dotenv";
 import connectDb from "./config/MongoDb.js";
 import ImportData from "./Dataimport.js";
 import productRoute from "./Routes/ProductRoute.js";
+import { errorHandler, notFound } from "./Middleware/Errors.js";
+import userRoutes from "./Routes/UserRoutes.js";
 
-const app = express();
 connectDb();
 dotenv.config();
 
+const app = express();
+app.use(express.json());
+
 app.use("/api/import", ImportData);
 app.use("/api/product", productRoute);
+app.use("/api/users", userRoutes);
+// error handler
+app.use(notFound);
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
   res.json("API is running....");

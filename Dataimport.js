@@ -1,9 +1,9 @@
 import express from "express";
-import products from "./data/Products.js";
+import clothes from "./data/Clothes.js";
 import users from "./data/users.js";
-import Product from "./Model/ProductModel.js";
 import User from "./Model/UserModel.js";
 import asyncHandler from "express-async-handler";
+import Clothe from "./Model/ClothesModel.js";
 
 const ImportData = express.Router();
 
@@ -19,8 +19,8 @@ ImportData.post(
 ImportData.post(
   "/product",
   asyncHandler(async (req, res) => {
-    await Product.remove({});
-    const importProduct = await Product.insertMany(products);
+    await Clothe.remove({});
+    const importProduct = await Clothe.insertMany(clothes);
     res.send({ importProduct });
   })
 );
