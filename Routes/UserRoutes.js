@@ -16,11 +16,15 @@ userRoutes.post(
         email: user.email,
         phone: user.phone,
         isAdmin: user.isAdmin,
+        rating: user.rating,
+        numReviews: user.numReviews,
+        avatar: user.avatar,
+        reviews: user.reviews,
         createdAt: user.createdAt,
       });
     } else {
       res.status(401);
-      throw new Error("Invalid email or password");
+      throw new Error("Sai email hoặc mật khẩu");
     }
   })
 );
@@ -57,6 +61,11 @@ userRoutes.post(
         email: user.email,
         phone: user.phone,
         isAdmin: user.isAdmin,
+        avatar: user.avatar,
+        rating: user.rating,
+        numReviews: user.numReviews,
+        reviews: user.reviews,
+        createdAt: user.createdAt,
       });
     } else {
       res.status(400);
@@ -77,7 +86,41 @@ userRoutes.get(
         email: user.email,
         phone: user.phone,
         isAdmin: user.isAdmin,
+        rating: user.rating,
+        numReviews: user.numReviews,
+        reviews: user.reviews,
+        avatar: user.avatar,
         createdAt: user.createdAt,
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+
+userRoutes.put(
+  "/profile",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.body.id);
+    if (user) {
+      if (req.body.avatar) {
+        user.avatar = req.body.avatar || user.avatar;
+      } else {
+        user.password = req.body.password;
+      }
+      const userupdated = await user.save();
+      res.json({
+        _id: userupdated._id,
+        name: userupdated.name,
+        email: userupdated.email,
+        phone: userupdated.phone,
+        isAdmin: userupdated.isAdmin,
+        rating: userupdated.rating,
+        numReviews: userupdated.numReviews,
+        avatar: userupdated.avatar,
+        reviews: userupdated.reviews,
+        createdAt: userupdated.createdAt,
       });
     } else {
       res.status(404);

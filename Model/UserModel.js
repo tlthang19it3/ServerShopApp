@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+const getDate = () => {
+  let ts = Date.now();
+  let date_ob = new Date(ts);
+  let date = date_ob.getDate();
+  let month = date_ob.getMonth() + 1;
+  let year = date_ob.getFullYear();
+  return date + "/" + month + "/" + year;
+};
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -25,9 +33,29 @@ const userSchema = mongoose.Schema(
       require: true,
       default: false,
     },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    numReviews: {
+      type: Number,
+      default: 0,
+    },
+    reviews: {
+      type: Array,
+      default: [],
+    },
+    avatar: {
+      type: String,
+      default: "https://cdn-icons-png.flaticon.com/512/428/428933.png",
+    },
+    createdAt: {
+      type: String,
+      default: getDate(),
+    },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
