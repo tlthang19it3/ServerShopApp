@@ -24,7 +24,7 @@ userRoutes.post(
       });
     } else {
       res.status(401);
-      throw new Error("Sai email hoặc mật khẩu");
+      throw new Error("Sai thông tin đăng nhập");
     }
   })
 );
@@ -109,6 +109,44 @@ userRoutes.put(
       } else {
         user.password = req.body.password;
       }
+      const userupdated = await user.save();
+      res.json({
+        _id: userupdated._id,
+        name: userupdated.name,
+        email: userupdated.email,
+        phone: userupdated.phone,
+        isAdmin: userupdated.isAdmin,
+        rating: userupdated.rating,
+        numReviews: userupdated.numReviews,
+        avatar: userupdated.avatar,
+        reviews: userupdated.reviews,
+        createdAt: userupdated.createdAt,
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+
+userRoutes.put(
+  "/review",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.body.sellerId);
+    if (user) {
+      user.rating = user.rating + req.body.rating;
+      user.numReviews = user.numReviews + 1;
+      user.reviews = [
+        ...user.reviews,
+        {
+          userid: req.body.buyerId,
+          name: req.body.buyername,
+          avatar: req.body.avatar,
+          rating: req.body.rating,
+          date: req.body.date,
+          comment: req.body.comment,
+        },
+      ];
       const userupdated = await user.save();
       res.json({
         _id: userupdated._id,
